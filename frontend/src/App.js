@@ -10,6 +10,7 @@ import ToDo from './components/ToDo';
 import Button from './elements/Button';
 
 function App() {
+    // 왜 수정이 안되지?
 
     const [toDo, setToDo] = useState([]);
     const [content, setContent] = useState('');
