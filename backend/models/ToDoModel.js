@@ -8,7 +8,7 @@ const todoSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        default: Date()
+        default: new Date()
     },
     isDone: {
         type: Boolean,

@@ -1,7 +1,8 @@
+// App.js
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 
-import { getAllToDo, addToDo } from './utill/HandleApi';
+import { getAllToDo, addToDo, deletingToDo } from './utill/HandleApi';
 
 import './App.scss'
 import Header from "./components/Header";
@@ -12,7 +13,6 @@ function App() {
 
     const [toDo, setToDo] = useState([]);
     const [content, setContent] = useState('');
-    const [isEdit, setIsEdit] = useState(false);
 
     useEffect(() => {
         getAllToDo(setToDo);
@@ -45,8 +45,8 @@ function App() {
                     <ToDo
                         key={todo._id}
                         {...todo}
-                        isEdit={isEdit}
-                        setIsEdit={setIsEdit}
+                        setToDo={setToDo}
+                        handleDeleteToDo={() => deletingToDo(todo._id, setToDo)}
                     />
                 )}
             </ul>

@@ -1,37 +1,34 @@
+// ToDo.js
 import React, { useState } from "react";
 
 import Button from "../elements/Button";
+import { updatingToDo } from "../utill/HandleApi";
 
 const ToDo = ({
     _id,
     content,
     isDone,
     date,
-
+    setToDo,
+    handleDeleteToDo
 }) => {
-    const [isEdit, setIsEdit] = useState(false);
+    const [localContent, setLocalContent] = useState(content);
+    const [isUpdate, setIsUpdate] = useState(false);
 
-    
-    // // 삭제버튼
-    // const clickBtnDel = () => {
-    //     props.onDeleteTodo(props.id);
-    // };
-    // // 완료체크
-    // const handleToggleIsDone = () => {
-    //     props.onToggleDone(props.id);
-    // }
-    // // 수정여부
-    // const toggleIsEdit = () => {setIsEdit(!isEdit)};
-    // // 수정취소
-    // const clickBtnEditQuit = () => {
-    //     setIsEdit(false);
-    //     setLocalContent(props.content);
-    // }
-    // // 수정완료
-    // const clickBtnEdit = () => {
-    //     props.onEditTodo(props.id, localContent);
-    //     toggleIsEdit();
-    // };
+    const handleContentChange = (e) => {
+        setLocalContent(e.target.value);
+    }
+
+    const handleUpdateToDo = () => {
+        updatingToDo(_id, localContent, isDone, setToDo);
+        setIsUpdate(false);
+    }
+
+    const handleCheckboxChange = () => {
+        updatingToDo(_id, content, !isDone, setToDo);
+    }
+
+
 
     return (
         <li>
@@ -43,35 +40,35 @@ const ToDo = ({
                             id={`done-${_id}`}
                             checked={isDone}
                             placeholder="isDone"
-                            onChange={() => {}}
+                            onChange={handleCheckboxChange}
                         />
                         <label htmlFor={`done-${_id}`}></label>
                     </div>
                     <div className="memo">
-                        {isEdit ? (
+                        {isUpdate ? (
                             <>
                                 <input
                                     type="text" 
-                                    value={''}
-                                    onChange={() => {}}
-                                    placeholder="수정할 내용을 입력해주세요."
+                                    value={localContent}
+                                    onChange={handleContentChange}
+                                    placeholder="UpDating..."
                                 />
                             </>
                         ) : (
                             <p className={isDone ? "text done" : "text"}>{content}</p>
                         )}
-                        <p className="date">{date}</p>
+                        <p className="date">{new Date(date).toLocaleString()}</p>
                     </div>
                 </div>
                 <div className="form">
-                    {isEdit ? (
+                    {isUpdate ? (
                         <>
                             <Button 
                                 text={"취소"}
                                 type={"edit"}
                                 size={"small"}
                                 color={"edit"}
-                                click={() => {}}
+                                click={() => {setIsUpdate(false)}}
                                 name={"edit"}
                             />
                             <Button 
@@ -79,7 +76,7 @@ const ToDo = ({
                                 type={"delete"}
                                 size={"small"}
                                 color={"theme"}
-                                click={() => {}}
+                                click={handleUpdateToDo}
                                 name={"delete"}
                             />
                         </>
@@ -90,7 +87,7 @@ const ToDo = ({
                                 type={"edit"}
                                 size={"small"}
                                 color={"edit"}
-                                click={() => {}}
+                                click={() => {setIsUpdate(true)}}
                                 name={"edit"}
                             />
                             <Button 
@@ -98,7 +95,7 @@ const ToDo = ({
                                 type={"delete"}
                                 size={"small"}
                                 color={"theme"}
-                                click={() => {}}
+                                click={() => {handleDeleteToDo(_id)}}
                                 name={"delete"}
                             />
                         </>
