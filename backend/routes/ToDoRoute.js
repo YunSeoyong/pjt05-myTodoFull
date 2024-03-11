@@ -7,6 +7,6 @@ const router = Router();
 router.get('/', getToDo);
 router.post('/save', saveToDo);
 router.put('/update/:id', updateToDo);
-router.delete('/delete/:id', deleteToDo);
+router.delete('/delete/:_id', deleteToDo);
 
 module.exports = router;

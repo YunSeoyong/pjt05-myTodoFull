@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 
-import { getAllToDo, addToDo, deletingToDo } from './utill/HandleApi';
+import { getAllToDo, addToDo } from './utill/HandleApi';
 
 import './App.scss'
 import Header from "./components/Header";
@@ -28,7 +28,7 @@ function App() {
                         type="text"
                         value={content}
                         onChange={(e) => {setContent(e.target.value)}}
-                        placeholder="Write ToDos..."
+                        placeholder="Write Todo..."
                         name={"edit"}
                     />
                     <Button
@@ -47,7 +47,6 @@ function App() {
                         key={todo._id}
                         {...todo}
                         setToDo={setToDo}
-                        handleDeleteToDo={() => deletingToDo(todo._id, setToDo)}
                     />
                 )}
             </ul>

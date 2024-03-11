@@ -6,7 +6,7 @@ const getAllToDo = (setToDo) => {
     axios
         .get(baseUrl)
         .then(({data}) => {
-            console.log('data ---->', data);
+            // console.log('data ---->', data);
             const sortedData = data.sort((a, b) => {
                 if(a.isDone && !b.isDone) {
                     return 1;
@@ -27,7 +27,6 @@ const addToDo = (content, setContent, setToDo) => {
         .post(`${baseUrl}/save`, {content, date: currentDate})
         .then((response) => {
             const newTodo = response.data;
-            console.log(newTodo);
             setContent("");
             setToDo((prev) => ([newTodo, ...prev]));
         })
@@ -53,12 +52,12 @@ const updatingToDo = (id, content, isDone, setToDo) => {
         .catch(err => console.log(err));
 };
 
-const deletingToDo = (_id, setToDo) => {
+const deletingToDo = (id, setToDo) => {
     axios
-        .delete(`${baseUrl}/delete/${_id}`)
-        .then((data) => {
-            console.log(data);
-            setToDo()
+        .delete(`${baseUrl}/delete/${id}`, {_id: id})
+        .then(() => {
+            console.log(`ToDo ${id} deleted successfully`);
+            setToDo(prevToDos => prevToDos.filter(todo => todo._id !== id));
         })
         .catch(err => console.log(err));
 }

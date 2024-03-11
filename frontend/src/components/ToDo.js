@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 import Button from "../elements/Button";
-import { updatingToDo } from "../utill/HandleApi";
+import { updatingToDo, deletingToDo } from "../utill/HandleApi";
 
 const ToDo = ({
     _id,
@@ -10,7 +10,6 @@ const ToDo = ({
     isDone,
     date,
     setToDo,
-    handleDeleteToDo
 }) => {
     const [localContent, setLocalContent] = useState(content);
     const [isUpdate, setIsUpdate] = useState(false);
@@ -26,6 +25,10 @@ const ToDo = ({
 
     const handleCheckboxChange = () => {
         updatingToDo(_id, content, !isDone, setToDo);
+    }
+
+    const handleDeleteToDo = () => {
+        deletingToDo(_id, setToDo);
     }
 
 
@@ -95,7 +98,7 @@ const ToDo = ({
                                 type={"delete"}
                                 size={"small"}
                                 color={"theme"}
-                                click={() => {handleDeleteToDo(_id)}}
+                                click={handleDeleteToDo}
                                 name={"delete"}
                             />
                         </>
